@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-
+const passportFacebook = require('../helpers/facebook-verify');
 const { validarCampos, validarJWT } = require('../middlewares');
 
 
-const { login, googleSignin, validarTokenUsuario } = require('../controllers/auth');
+const { login, googleSignin, validarTokenUsuario,facebookSignin } = require('../controllers/auth');
 
 
 const router = Router();
@@ -20,6 +20,14 @@ router.post('/google',[
     check('id_token', 'El id_token es necesario').not().isEmpty(),
     validarCampos
 ], googleSignin );
+
+router.post('/facebook',[
+    check('accessToken', 'El token es necesario').not().isEmpty(),
+    validarCampos
+], facebookSignin );
+
+
+
 
 
 router.get('/',[

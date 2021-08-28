@@ -32,6 +32,14 @@ const UsuarioSchema = Schema({
         type: Boolean,
         default: false
     },
+    facebook: {
+        type: Boolean,
+        default: false
+    },
+    nuevo: {
+        type: Boolean,
+        default: true
+    },
 });
 
 
