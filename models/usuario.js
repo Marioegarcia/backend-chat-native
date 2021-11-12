@@ -15,8 +15,11 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'La contraseña es obligatoria'],
     },
+    amigos: { type: Schema.Types.ObjectId, ref: 'Amigos'},
+    is_active: { type: Boolean, default: false },
     img: {
         type: String,
+        default:''
     },
     rol: {
         type: String,
@@ -39,6 +42,10 @@ const UsuarioSchema = Schema({
     nuevo: {
         type: Boolean,
         default: true
+    },
+    couple: {
+        type: Boolean,
+        default: false
     },
 });
 

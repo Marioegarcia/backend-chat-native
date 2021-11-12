@@ -10,7 +10,8 @@ const { generarJWT } = require('../helpers');
 const usuariosGet = async(req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query;
-    const query = { estado: true };
+    //Menos yo
+    const query = { estado: true , _id:{ $nin :['6129941febab4a79c8342adb']} };
 
     const [ total, usuarios ] = await Promise.all([
         Usuario.countDocuments(query),

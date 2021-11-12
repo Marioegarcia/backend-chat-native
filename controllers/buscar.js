@@ -10,19 +10,13 @@ const coleccionesPermitidas = [
     'roles'
 ];
 
-const buscarUsuarios = async( termino = '', res = response ) => {
-
-    const esMongoID = ObjectId.isValid( termino ); // TRUE 
-
-    if ( esMongoID ) {
-        const usuario = await Usuario.findById(termino);
-        return res.json({
-            results: ( usuario ) ? [ usuario ] : []
-        });
-    }
-
+const buscarUsuarios = async( termino = '', res = response,id ) => {
+    
+   
     const regex = new RegExp( termino, 'i' );
+   
     const usuarios = await Usuario.find({
+        _id:{ $nin :[id]} ,
         $or: [{ nombre: regex }, { correo: regex }],
         $and: [{ estado: true }]
     });
@@ -78,7 +72,8 @@ const buscarProductos = async( termino = '', res = response ) => {
 
 const buscar = ( req, res = response ) => {
     
-    const { coleccion, termino  } = req.params;
+    const { coleccion, termino, id  } = req.params;
+    
 
     if ( !coleccionesPermitidas.includes( coleccion ) ) {
         return res.status(400).json({
@@ -88,7 +83,7 @@ const buscar = ( req, res = response ) => {
 
     switch (coleccion) {
         case 'usuarios':
-            buscarUsuarios(termino, res);
+            buscarUsuarios(termino, res,id);
         break;
         case 'categorias':
             buscarCategorias(termino, res);
@@ -108,5 +103,5 @@ const buscar = ( req, res = response ) => {
 
 
 module.exports = {
-    buscar
+    buscar,buscarUsuarios
 }

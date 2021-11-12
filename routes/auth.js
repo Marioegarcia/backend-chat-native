@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const passportFacebook = require('../helpers/facebook-verify');
+
 const { validarCampos, validarJWT } = require('../middlewares');
 
 

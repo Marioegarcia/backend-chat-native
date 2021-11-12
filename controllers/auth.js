@@ -20,14 +20,14 @@ const login = async(req, res = response) => {
         const usuario = await Usuario.findOne({ correo });
         if ( !usuario ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - correo'
+                msg: 'Datos no son correctos.'
             });
         }
 
         // SI el usuario está activo
         if ( !usuario.estado ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - estado: false'
+                msg: 'Usuario Bloqueado(inactivo).'
             });
         }
 
@@ -35,7 +35,7 @@ const login = async(req, res = response) => {
         const validPassword = bcryptjs.compareSync( password, usuario.password );
         if ( !validPassword ) {
             return res.status(400).json({
-                msg: 'Usuario / Password no son correctos - password'
+                msg: 'Datos no son correctos - password'
             });
         }
 
@@ -109,7 +109,7 @@ const googleSignin = async(req, res = response) => {
 
 const facebookSignin = async(req, res = response) => {
     const {accessToken} = req.body;
-    
+   
     try {
         const { correo, nombre, img } = await facebookVerify( accessToken );
 
